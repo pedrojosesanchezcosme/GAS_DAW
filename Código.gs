@@ -35,12 +35,13 @@ function mandarCambios(){
   var hojaCorreo = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Correos');
   
   //Recojemos todas las listas de correos y las almacenamos en un vector.
+  //Soy consciente de que cuando recojer la ultima fila, coje minimo hasta la 4 debido a que toma la ultima fila de todas las columnas.
   var listaCorreos = hojaCorreo.getRange(1, 1, hojaCorreo.getLastRow()).getValues();
     
   //Recorremos el vector  y vamos notificando a todos los usuarios que ha surgido un cambio.
   for(i=0; i<listaCorreos.length; i++){
     try{
-      //No nos permite mandar los correos desde un Trigger Simple desde GAS debido a que no tiene permisos. Referencia: https://developers.google.com/apps-script/guides/triggers/ Se encuentra en el apartado de restricciones
+      //No nos permite mandar los correos desde un Trigger Simple desde GAS debido a que no tiene permisos, porque podria ser una vulernerabilidad. Referencia: https://developers.google.com/apps-script/guides/triggers/ Se encuentra en el apartado de restricciones
       MailApp.sendEmail(listaCorreos[i], "Cambios Realizados en Google Sheet", "Hola, le notificamos que se ha realizado un cambio, en el sector que esta usted monitorizando");    
     } catch(error){
       Logger.log(error);
