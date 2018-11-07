@@ -2,9 +2,12 @@ function onEdit(e){
   //Asignando la celda que se ha cambiado
   var rangoE = e.range;
   
+  //Con esto eliminamos el formato de previo, ya que sino podria a darse una confusion con tantos rangos marcados de un mismo color.
+  rangoE.getSheet().clearFormats();
+  
   //Asignando la fila de la celda donde se ha dado el cambio
   var filaE = rangoE.getRow();
-
+  
   //Asignando la columna de la celda donde se ha dado el cambio
   var columnaE = rangoE.getColumn();
     
@@ -25,8 +28,10 @@ function onEdit(e){
     
   //La condicion evalua si la celda se encuentra dentro de el rango y manda los correos
   if(filaE >= filaDesdeMonitorizar && filaE <= filaHastaMonitorizar && columnaE >= columnaDesdeMonitorizar && columnaE <= columnaHastaMonitorizar){
+    //Esta funcion la utilizo para poder marcar de un color determinado el rango modificado.
+    rangoE.setBackground("red");
     mandarCambios();
-  }
+  }  
 }
 
 //Como los permisos no me permiten realizar la notificación, he incluido un boton que permite al usuario notificar manualmente a todos los usuarios que se encuentren en la lista.
